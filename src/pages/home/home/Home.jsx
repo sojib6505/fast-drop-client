@@ -1,7 +1,13 @@
-import React from 'react'
+import Banner from '../banner/Banner'
+import HowItWork from '../howItWork/HowItWork'
+import OurServices from '../services/OurServices'
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <div>
+        <Banner></Banner>
+        <HowItWork></HowItWork>
+        <OurServices></OurServices>
+    </div>
   )
 }
