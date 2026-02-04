@@ -4,7 +4,7 @@ export default function ServiceCard({ service }) {
   const { title, description,icon: Icon } = service;
  
   return (
-    <div
+    <div data-aos="zoom-in-up"
       className='card transition hover:shadow-xl bg-white hover:bg-lime-300 '
     >
       <div className="card-body text-center p-6 sm:p-7 lg:p-8">

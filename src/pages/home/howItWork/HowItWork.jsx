@@ -31,17 +31,17 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className=" py-10 md:px-10 rounded-2xl">
+    <section className=" md:py-10 md:px-10 rounded-2xl">
       <div className="container mx-auto px-4">
         {/* Section Title */}
-        <h2 className="text-3xl font-bold mb-10 text-left">
+        <h2 className="text-3xl font-bold mb-2 md:mb-10 text-left">
           How it Works
         </h2>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step) => (
-            <div
+            <div data-aos="fade-up"
               key={step.id}
               className="card bg-base-100 shadow-md hover:shadow-lg transition"
             >

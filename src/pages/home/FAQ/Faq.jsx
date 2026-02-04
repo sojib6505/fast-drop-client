@@ -12,9 +12,8 @@ export default function Faq() {
           Find answers to the most common questions about our courier and delivery services.
         </p>
       </div>
-
       {/* FAQ */}
-      <div className="md:px-20 px-4 space-y-4">
+      <div  data-aos="fade-right" className="md:px-20 px-4 space-y-4">
         <div className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
           <input type="radio" name="my-accordion-2" defaultChecked />
           <div className="collapse-title font-semibold">
@@ -25,7 +24,7 @@ export default function Faq() {
           </div>
         </div>
 
-        <div className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
+        <div  data-aos="fade-up-left" className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
           <input type="radio" name="my-accordion-2" />
           <div className="collapse-title font-semibold">
             How long does delivery usually take?
@@ -35,7 +34,7 @@ export default function Faq() {
           </div>
         </div>
 
-        <div className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
+        <div  data-aos="fade-right" className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
           <input type="radio" name="my-accordion-2" />
           <div className="collapse-title font-semibold">
             Is my parcel safe during delivery?
@@ -45,7 +44,7 @@ export default function Faq() {
           </div>
         </div>
 
-        <div className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
+        <div  data-aos="fade-up-left" className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
           <input type="radio" name="my-accordion-2" />
           <div className="collapse-title font-semibold">
             Do you offer Cash on Delivery (COD)?
@@ -55,7 +54,7 @@ export default function Faq() {
           </div>
         </div>
 
-        <div className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
+        <div  data-aos="fade-right" className="collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl">
           <input type="radio" name="my-accordion-2" />
           <div className="collapse-title font-semibold">
             How can I track my shipment?

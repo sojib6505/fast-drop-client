@@ -2,7 +2,7 @@ import ServiceCard from "./ServiceCard";
 import servicesData from "../../../api/servicesData";
 export default function OurServices() {
     return (
-        <section className="bg-[#063C3F] mx-auto mb-10  py-14 sm:py-16  lg:py-20 rounded-2xl w-full max-w-[95%]">
+        <section className="bg-[#063C3F] mx-auto mb-10 mt-5  py-5 sm:py-16  lg:py-20 rounded-2xl w-full max-w-[95%]">
             <div className="  px-4">
                 {/* Section Header */}
                 <div className="text-center text-white mb-10 sm:mb-12 lg:mb-14">

@@ -5,7 +5,7 @@ export default function FeatureSection() {
   return (
     <section className="max-w-6xl mb-10 mx-auto py-12 border-gray-300 border-t-2 border-b-2 border-dashed space-y-12">
       {featuresData.map((feature) => (
-        <div
+        <div  data-aos="fade-right"
           key={feature.id}
           className="flex flex-col md:flex-row items-center gap-6"
         >

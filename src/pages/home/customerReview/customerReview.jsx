@@ -4,7 +4,7 @@ import customer_top from "../../../assets/customer_top.png"
 export default function CustomerReview() {
   return (
     <div>
-        <div className="flex mb-5 justify-center">
+        <div className="flex  justify-center">
             <img className="max-w-3xs" src={customer_top} alt="" />
         </div>
         <div className="">

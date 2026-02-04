@@ -17,16 +17,16 @@ const logos = [
 ];
 export default function LogoMarquee() {
     return (
-        <section className="bg-base-200 py-12 rounded-2xl overflow-hidden">
+        <section className="bg-base-200 md:py-12 rounded-2xl overflow-hidden">
             <div className="relative w-full">
-                <p className='text-xl md:text-3xl font-extrabold text-center mb-12'>We've helped thousands of sales teams</p>
-                <div className="flex w-max gap-16 animate-logoMarquee">
+                <p className='text-xl p-2  md:text-3xl font-extrabold text-center mb-12'>We've helped thousands of sales teams</p>
+                <div className="flex w-max gap-10 animate-logoMarquee mb-5">
                     {[...logos, ...logos].map((logo, index) => (
                         <img
                             key={index}
                             src={logo}
                             alt="brand logo"
-                            className="h-5 md:h-8 w-auto object-contain opacity-80 hover:opacity-100 transition"
+                            className="h-5  w-auto object-contain opacity-80 hover:opacity-100 transition"
                         />
                     ))}
                 </div>

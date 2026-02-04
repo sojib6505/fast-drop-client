@@ -9,7 +9,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 export default function ReviewSlider() {
   return (
-    <div className="py-20 bg-[#F6F9FC]">
+    <div className="py-5 md:py-20 bg-[#F6F9FC]">
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         centeredSlides={true}
