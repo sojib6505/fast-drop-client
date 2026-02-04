@@ -46,7 +46,7 @@ export default function HowItWorks() {
               className="card bg-base-100 shadow-md hover:shadow-lg transition"
             >
               <div className="card-body">
-                <div className="text-primary text-3xl mb-4">
+                <div className=" text-3xl mb-4">
                   {step.icon}
                 </div>
                 <h3 className="font-semibold text-lg">

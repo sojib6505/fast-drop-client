@@ -1,5 +1,5 @@
 import ServiceCard from "./ServiceCard";
-import servicesData from "./servicesData";
+import servicesData from "../../../api/servicesData";
 export default function OurServices() {
     return (
         <section className="bg-[#063C3F] mx-auto mb-10  py-14 sm:py-16  lg:py-20 rounded-2xl w-full max-w-[95%]">
