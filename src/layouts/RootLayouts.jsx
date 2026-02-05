@@ -5,7 +5,7 @@ import Navbar from "../pages/shared/navbar/Navbar";
 
 export default function RootLayouts() {
   return (
-    <div className="lg:w-7xl mx-auto">
+    <div className="">
         <Navbar></Navbar>
         <Outlet></Outlet>
         <Footer></Footer>

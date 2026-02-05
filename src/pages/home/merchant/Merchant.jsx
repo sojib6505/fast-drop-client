@@ -1,11 +1,11 @@
 import merchant from '../../../assets/location-merchant.png'
 export default function Merchant() {
     return (
-        <div data-aos="fade-up" className="bg-no-repeat bg-[url(assets/be_a_merchant_bg.png)] bg-[#03373D] rounded-2xl mb-10 p-5 md:p-20 ">
+        <div data-aos="fade-up" className="lg:max-w-7xl mx-auto bg-no-repeat bg-[url(assets/be_a_merchant_bg.png)] bg-[#03373D] rounded-2xl mb-10 p-5 md:p-20 ">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <img
                     src={merchant}
-                    className="max-w-sm rounded-lg "
+                    className="w-sm rounded-lg "
                 />
                 <div>
                     <h1 className="text-2xl md:text-5xl font-bold text-white">Merchant and Customer Satisfaction is Our First Priority</h1>
