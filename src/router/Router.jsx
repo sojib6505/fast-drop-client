@@ -5,6 +5,7 @@ import AuthenticationLayouts from "../layouts/AuthenticationLayouts";
 import Login from "../pages/Authentication/login/Login";
 import Register from "../pages/Authentication/register/Register";
 import Coverage from "../pages/coverage/Coverage";
+import AddParcel from "../pages/addParcel/AddParcel";
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
         {
           path:'/coverage',
           Component: Coverage
+        },
+        {
+          path:'/addParcel',
+          element: <AddParcel></AddParcel>
         }
     ]
   },
