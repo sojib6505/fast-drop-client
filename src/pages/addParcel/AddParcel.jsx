@@ -1,16 +1,24 @@
 import { useForm } from "react-hook-form";
 import coverageData from "../../api/coverage";
 import Swal from "sweetalert2";
+import useAxios from "../../hooks/useAxios";
+import UseAuth from "../../hooks/UseAuth";
+import { useEffect } from "react";
+
 
 export default function AddParcel() {
+    const axiosSecure = useAxios()
+    const { user } = UseAuth()
     const {
         register,
         handleSubmit,
         watch,
+        setValue,
         formState: { errors },
     } = useForm({
         defaultValues: {
             type: "document",
+            senderEmail:"",
             title: "",
             weight: "",
             senderName: "",
@@ -27,6 +35,13 @@ export default function AddParcel() {
             receiverInstruction: "",
         },
     });
+
+    useEffect(() => {
+        if (user?.email) {
+            setValue("senderMail", user.email);
+        }
+    }, [user?.email, setValue]);
+
     const watchParcelType = watch("type");
     const watchSenderRegion = watch("senderRegion");
     const watchReceiverRegion = watch("receiverRegion");
@@ -84,13 +99,15 @@ export default function AddParcel() {
                                 .toString()
                                 .padStart(3, "0")}`;
 
-        let pricingDetails = `Parcel ID: ${parcelId} 
-                             Parcel Type: ${data.type}
-                             Weight: ${data.weight || "N/A"} kg
-                             Sender Center: ${data.senderCenter}
-                             Receiver Center: ${data.receiverCenter}
-                             Delivery Cost: ৳${cost}
-                             Time: ${time}`;
+        let pricingDetails =
+
+            `Parcel ID: ${parcelId} 
+Parcel Type: ${data.type}
+Weight: ${data.weight || "N/A"} kg
+Sender Center: ${data.senderCenter}
+Receiver Center: ${data.receiverCenter}
+Delivery Cost: ৳${cost}
+Time: ${time}`
         Swal.fire({
             title: "Confirm Parcel Submission",
             html: `<pre class="text-left">${pricingDetails}</pre>`,
@@ -107,14 +124,25 @@ export default function AddParcel() {
                     cost,
                     creation_date: now.toISOString(),
                 };
+                // add data in mongoDB
+                axiosSecure.post('/parcels', parcelData)
+                    .then((res) => {
+                        console.log(res.data)
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Parcel saved successfully!",
+                                icon: "success",
+                                timer: 2000,
+                                showConfirmButton: false,
+                            })
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
                 console.log("Parcel saved:", parcelData);
-                Swal.fire({
-                    title: "Success!",
-                    text: "Parcel saved successfully!",
-                    icon: "success",
-                    timer: 2000,
-                    showConfirmButton: false,
-                });
+
             } else {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
@@ -131,7 +159,7 @@ export default function AddParcel() {
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Parcel Info */}
-                <div className="p-4 rounded-lg  space-y-4 ">
+                <div className="p-4 rounded-lg space-y-4">
                     <h2 className="text-xl font-semibold">Parcel Info</h2>
 
                     {/* Parcel Type as Radio */}
@@ -155,126 +183,190 @@ export default function AddParcel() {
                             Non-Document
                         </label>
                     </div>
+
                     {/* Title and Weight below the radios */}
                     <div className="flex flex-col md:flex-row gap-4 mt-2">
-                        <input
-                            {...register("title", { required: true })}
-                            placeholder="Title"
-                            className="input input-bordered w-full"
-                        />
-                        {watchParcelType === "non-document" && (
+                        <div className="flex flex-col w-full">
+                            <label htmlFor="title" className="font-medium mb-1">Title</label>
                             <input
-                                {...register("weight", { min: 0 })}
-                                type="number"
-                                placeholder="Weight (kg)"
+                                id="title"
+                                {...register("title", { required: true })}
+                                placeholder="Title"
                                 className="input input-bordered w-full"
                             />
+                        </div>
+
+                        {watchParcelType === "non-document" && (
+                            <div className="flex flex-col w-full">
+                                <label htmlFor="weight" className="font-medium mb-1">Weight (kg)</label>
+                                <input
+                                    id="weight"
+                                    {...register("weight", { min: 0 })}
+                                    type="number"
+                                    placeholder="Weight (kg)"
+                                    className="input input-bordered w-full"
+                                />
+                            </div>
                         )}
                     </div>
                 </div>
+                <div className="divider"></div>
                 {/* Sender Info */}
-                <div className="p-4  space-y-4  mt-4">
+                <div className="p-4 space-y-4 mt-4">
                     <h2 className="text-xl font-semibold">Sender Info</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input
-                            {...register("senderName", { required: true })}
-                            placeholder="Sender Name"
-                            className="input input-bordered w-full"
-                        />
-                        <input
-                            {...register("senderContact", { required: true })}
-                            placeholder="Contact"
-                            className="input input-bordered w-full"
-                        />
-                        <select
-                            {...register("senderRegion", { required: true })}
-                            className="input input-bordered w-full"
-                        >
-                            <option value="">Select Region</option>
-                            {regions.map((r) => (
-                                <option key={r} value={r}>
-                                    {r}
-                                </option>
-                            ))}
-                        </select>
-                        <select
-                            {...register("senderCenter", { required: true })}
-                            className="input input-bordered w-full"
-                        >
-                            <option value="">Select Service Center</option>
-                            {getCenters(watchSenderRegion).map((c) => (
-                                <option key={c} value={c}>
-                                    {c}
-                                </option>
-                            ))}
-                        </select>
-                        <input
-                            {...register("senderAddress", { required: true })}
-                            placeholder="Address"
-                            className="input input-bordered w-full"
-                        />
-                        <textarea
-                            {...register("senderInstruction", { required: true })}
-                            placeholder="Pick up Instruction"
-                            className="textarea textarea-bordered w-full"
-                            rows={3}
-                        />
+                        <div className="flex flex-col">
+                            <label htmlFor="senderName" className="font-medium mb-1">Sender Name</label>
+                            <input
+                                id="senderName"
+                                {...register("senderName", { required: true })}
+                                placeholder="Sender Name"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="senderContact" className="font-medium mb-1">Contact</label>
+                            <input
+                                id="senderContact"
+                                {...register("senderContact", { required: true })}
+                                placeholder="Contact"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="senderRegion" className="font-medium mb-1">Region</label>
+                            <select
+                                id="senderRegion"
+                                {...register("senderRegion", { required: true })}
+                                className="input input-bordered w-full"
+                            >
+                                <option value="">Select Region</option>
+                                {regions.map((r) => (
+                                    <option key={r} value={r}>{r}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="senderCenter" className="font-medium mb-1">Service Center</label>
+                            <select
+                                id="senderCenter"
+                                {...register("senderCenter", { required: true })}
+                                className="input input-bordered w-full"
+                            >
+                                <option value="">Select Service Center</option>
+                                {getCenters(watchSenderRegion).map((c) => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="senderAddress" className="font-medium mb-1">Address</label>
+                            <input
+                                id="senderAddress"
+                                {...register("senderAddress", { required: true })}
+                                placeholder="Address"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="senderInstruction" className="font-medium mb-1">Pick Up Instruction</label>
+                            <textarea
+                                id="senderInstruction"
+                                {...register("senderInstruction", { required: true })}
+                                placeholder="Pick up Instruction"
+                                className="textarea textarea-bordered w-full"
+                                rows={3}
+                            />
+                        </div>
                     </div>
                 </div>
+
                 {/* Receiver Info */}
                 <div className="p-4 space-y-4 mt-4">
                     <h2 className="text-xl font-semibold">Receiver Info</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input
-                            {...register("receiverName", { required: true })}
-                            placeholder="Receiver Name"
-                            className="input input-bordered w-full"
-                        />
-                        <input
-                            {...register("receiverContact", { required: true })}
-                            placeholder="Contact"
-                            className="input input-bordered w-full"
-                        />
-                        <select
-                            {...register("receiverRegion", { required: true })}
-                            className="input input-bordered w-full"
-                        >
-                            <option value="">Select Region</option>
-                            {regions.map((r) => (
-                                <option key={r} value={r}>
-                                    {r}
-                                </option>
-                            ))}
-                        </select>
-                        <select
-                            {...register("receiverCenter", { required: true })}
-                            className="input input-bordered w-full"
-                        >
-                            <option value="">Select Service Center</option>
-                            {getCenters(watchReceiverRegion).map((c) => (
-                                <option key={c} value={c}>
-                                    {c}
-                                </option>
-                            ))}
-                        </select>
-                        <input
-                            {...register("receiverAddress", { required: true })}
-                            placeholder="Address"
-                            className="input input-bordered w-full"
-                        />
-                        <textarea
-                            {...register("receiverInstruction", { required: true })}
-                            placeholder="Delivery Instruction"
-                            className="textarea textarea-bordered w-full"
-                            rows={3}
-                        />
+                        <div className="flex flex-col">
+                            <label htmlFor="receiverName" className="font-medium mb-1">Receiver Name</label>
+                            <input
+                                id="receiverName"
+                                {...register("receiverName", { required: true })}
+                                placeholder="Receiver Name"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="receiverContact" className="font-medium mb-1">Contact</label>
+                            <input
+                                id="receiverContact"
+                                {...register("receiverContact", { required: true })}
+                                placeholder="Contact"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="receiverRegion" className="font-medium mb-1">Region</label>
+                            <select
+                                id="receiverRegion"
+                                {...register("receiverRegion", { required: true })}
+                                className="input input-bordered w-full"
+                            >
+                                <option value="">Select Region</option>
+                                {regions.map((r) => (
+                                    <option key={r} value={r}>{r}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="receiverCenter" className="font-medium mb-1">Service Center</label>
+                            <select
+                                id="receiverCenter"
+                                {...register("receiverCenter", { required: true })}
+                                className="input input-bordered w-full"
+                            >
+                                <option value="">Select Service Center</option>
+                                {getCenters(watchReceiverRegion).map((c) => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="receiverAddress" className="font-medium mb-1">Address</label>
+                            <input
+                                id="receiverAddress"
+                                {...register("receiverAddress", { required: true })}
+                                placeholder="Address"
+                                className="input input-bordered w-full"
+                            />
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label htmlFor="receiverInstruction" className="font-medium mb-1">Delivery Instruction</label>
+                            <textarea
+                                id="receiverInstruction"
+                                {...register("receiverInstruction", { required: true })}
+                                placeholder="Delivery Instruction"
+                                className="textarea textarea-bordered w-full"
+                                rows={3}
+                            />
+                        </div>
                     </div>
                 </div>
+
                 <button type="submit" className="btn btn-primary text-black shadow-2xs w-full mt-4">
                     Submit
                 </button>
             </form>
         </div>
+
 
     );
 };

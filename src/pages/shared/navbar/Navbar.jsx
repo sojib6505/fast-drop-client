@@ -1,13 +1,43 @@
-import { NavLink } from "react-router"
+import { Link, NavLink, useNavigate } from "react-router"
 import SharedLogo from "../logo/SharedLogo"
+import UseAuth from "../../../hooks/UseAuth"
+import Swal from "sweetalert2";
 
 
 export default function Navbar() {
+    const { user, loading, signOutUser } = UseAuth()
+    const navigate = useNavigate()
+    if (loading) {
+        return (
+            <div className="navbar bg-base-100 shadow-sm rounded-sm flex justify-center">
+                <span className="loading loading-ring loading-xs"></span>
+                <span className="loading loading-ring loading-sm"></span>
+                <span className="loading loading-ring loading-md"></span>
+                <span className="loading loading-ring loading-lg"></span>
+                <span className="loading loading-ring loading-xl"></span>
+            </div>
+        );
+    }
+    const handleSignOut = () => {
+        signOutUser().then(() => {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "SignOut Successfull",
+                showConfirmButton: false,
+                timer: 1500
+            });
+             navigate('/')
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
     const navItems = <>
-         <li><NavLink to='/'>Home</NavLink></li>   
+        <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/about'>About</NavLink></li>
         <li><NavLink to='/addParcel'>Add Parcel</NavLink></li>
-         <li><NavLink to='/coverage'>Coverage</NavLink></li>
+        <li><NavLink to='/myParcel'>My Parcel</NavLink></li>
+        <li><NavLink to='/coverage'>Coverage</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm rounded-sm">
@@ -28,11 +58,11 @@ export default function Navbar() {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                   {navItems}
+                    {navItems}
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {user ? <Link className="btn" to='/login' onClick={handleSignOut} >SignOut</Link> : <Link className="btn" to='/login'>Login</Link>}
             </div>
         </div>
     )
