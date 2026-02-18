@@ -38,7 +38,7 @@ export default function AddParcel() {
 
     useEffect(() => {
         if (user?.email) {
-            setValue("senderMail", user.email);
+            setValue("senderEmail", user.email);
         }
     }, [user?.email, setValue]);
 

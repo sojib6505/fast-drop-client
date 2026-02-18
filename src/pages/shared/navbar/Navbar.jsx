@@ -36,7 +36,7 @@ export default function Navbar() {
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/about'>About</NavLink></li>
         <li><NavLink to='/addParcel'>Add Parcel</NavLink></li>
-        <li><NavLink to='/myParcel'>My Parcel</NavLink></li>
+        <li><NavLink to='/myParcel'>Dashboard</NavLink></li>
         <li><NavLink to='/coverage'>Coverage</NavLink></li>
     </>
     return (
