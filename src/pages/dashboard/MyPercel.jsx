@@ -2,11 +2,13 @@ import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import useAxios from "../../hooks/useAxios"
 import UseAuth from "../../hooks/UseAuth"
+import { useNavigate } from "react-router"
 
 export default function MyPercel() {
     const { user } = UseAuth()
     const axiosSecure = useAxios()
     const [selectedParcel, setSelectedParcel] = useState(null)
+    const navigate = useNavigate()
 
     const { data = [], isLoading, error, refetch } = useQuery({
         queryKey: ['parcels', user?.email],
@@ -16,6 +18,10 @@ export default function MyPercel() {
             return res.data || []
         }
     })
+    const handlePay = (parcelId) => {
+        //  console.log("Pay for parcel ID:", e)
+        navigate(`/dashboard/payment/${parcelId}`)
+    }
 
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure?")
@@ -90,7 +96,24 @@ export default function MyPercel() {
                                     >
                                         Delete
                                     </button>
+
+                                    {/* Pay Button */}
+                                    {!parcel.paid ? (
+                                        <button
+                                            onClick={() => handlePay(parcel._id)}
+                                            className="btn btn-xs sm:btn-sm btn-success"
+                                        >
+                                            Pay
+                                        </button>
+                                    ) :(
+                                        <button
+                                            className="btn btn-xs sm:btn-sm "
+                                        >
+                                            Paid
+                                        </button>
+                                    )}
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>

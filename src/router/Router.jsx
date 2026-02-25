@@ -7,8 +7,10 @@ import Register from "../pages/Authentication/register/Register";
 import Coverage from "../pages/coverage/Coverage";
 import AddParcel from "../pages/addParcel/AddParcel";
 import PrivateRoute from "../routes/PrivateRoute";
-import MyParcelLayouts from "../layouts/MyParcelLayouts";
-import MyPercel from "../pages/myParcel/MyPercel";
+import DashboardLayouts from "../layouts/DashboardLayouts";
+import MyPercel from "../pages/dashboard/MyPercel";
+import Payment from "../pages/dashboard/payment/payment";
+
 
 
 const router = createBrowserRouter([
@@ -47,13 +49,17 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/',
+    path: '/dashboard',
     element: <PrivateRoute>
-      <MyParcelLayouts></MyParcelLayouts>
+      <DashboardLayouts></DashboardLayouts>
     </PrivateRoute>,
     children:[
-      {path:'/myParcel',
+      {path:'myParcel',
         Component: MyPercel 
+      },
+      {
+        path:'payment/:parcelId',
+        Component: Payment
       }
     ]
   }

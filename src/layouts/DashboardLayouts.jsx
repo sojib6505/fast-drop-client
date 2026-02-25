@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router";
 import SharedLogo from "../pages/shared/logo/SharedLogo";
 
-export default function MyParcelLayouts() {
+export default function DashboardLayouts() {
   return (
     <div className="min-h-screen">
       {/* NAVBAR */}
@@ -28,7 +28,7 @@ export default function MyParcelLayouts() {
           <label htmlFor="my-parcel" className="drawer-overlay"></label>
           <ul className="menu bg-base-200 w-64 h-full p-4">
             <li><a>Dashboard</a></li>
-            <li><a>My Parcels</a></li>
+            <li ><Link to='myParcel'>My Parcels</Link></li>
             <li><Link to='/addParcel'>Add Parcel</Link></li>
           </ul>
         </div>
