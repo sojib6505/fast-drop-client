@@ -10,6 +10,7 @@ export default function Footer() {
         <li><NavLink to='/about'>About</NavLink></li>
         <li><NavLink to='/addParcel'>Add Parcel</NavLink></li>
         <li><NavLink to='/coverage'>Coverage</NavLink></li>
+        <li><NavLink to='/beARider'>Be A Rider</NavLink></li>
     </>
     return (
         <footer className="footer footer-horizontal footer-center bg-neutral text-neutral-content p-10">

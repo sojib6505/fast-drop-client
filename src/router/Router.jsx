@@ -10,6 +10,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import DashboardLayouts from "../layouts/DashboardLayouts";
 import MyPercel from "../pages/dashboard/MyPercel";
 import Payment from "../pages/dashboard/payment/payment";
+import BeARider from "../pages/BeARider/BeARider";
 
 
 
@@ -30,6 +31,12 @@ const router = createBrowserRouter([
           path:'/addParcel',
           element: <PrivateRoute>
             <AddParcel></AddParcel>
+          </PrivateRoute>
+        },
+        {
+          path:'/beARider',
+          element: <PrivateRoute>
+           <BeARider></BeARider>
           </PrivateRoute>
         }
     ]
