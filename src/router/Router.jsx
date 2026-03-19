@@ -11,6 +11,8 @@ import DashboardLayouts from "../layouts/DashboardLayouts";
 import MyPercel from "../pages/dashboard/MyPercel";
 import Payment from "../pages/dashboard/payment/payment";
 import BeARider from "../pages/BeARider/BeARider";
+import PendingRiders from "../pages/dashboard/Riders/PendingRiders";
+import ActiveRiders from "../pages/dashboard/Riders/ActiveRiders";
 
 
 
@@ -67,6 +69,18 @@ const router = createBrowserRouter([
       {
         path:'payment/:parcelId',
         Component: Payment
+      },
+      {
+        path:'activeRiders',
+        element: <PrivateRoute> 
+          <ActiveRiders></ActiveRiders>
+        </PrivateRoute>
+      },
+      {
+        path:'pendingRiders',
+         element: <PrivateRoute>
+          <PendingRiders></PendingRiders>
+         </PrivateRoute>
       }
     ]
   }

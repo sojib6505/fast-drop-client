@@ -30,6 +30,8 @@ export default function DashboardLayouts() {
             <li><a>Dashboard</a></li>
             <li ><Link to='myParcel'>My Parcels</Link></li>
             <li><Link to='/addParcel'>Add Parcel</Link></li>
+            <li><Link to='activeRiders'>Active Riders</Link></li>
+            <li><Link to='pendingRiders'>Pending Riders</Link></li>
           </ul>
         </div>
       </div>

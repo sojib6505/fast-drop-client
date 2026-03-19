@@ -45,7 +45,8 @@ export default function BeARider() {
     const onSubmit = (data) => {
         const riderData = {
             ...data,
-            createdAt: new Date().toISOString(), // create time add
+            createdAt: new Date().toISOString(),
+            status: "pending",
         };
 
         axiosSecure.post("/riders", riderData).then(res => {
